@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto:300,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <title>Accidents Visualization</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+
+
+  </head>
+
+  <body>
+
+<div class="container">
+
+     <H1>Accidents Corporels de la Circulation </h1>
+       <form name ="subscribe" id="subscribe_frm">
+
+         <p>
+
+             <label for="depart">Départ :</label>
+
+             <input type="text" name="depart" id="depart" placeholder="Ex : Paris France" size="30" maxlength="40" />
+
+         </p>
+
+          <p>
+
+             <label for="arrivee">Arrivée :</label>
+
+             <input type="text" name="arrivee" id="arrivee" placeholder="Ex : Vincennes France" size="30" maxlength="40" />
+
+         </p>
+
+         <div>
+          <button type="button" class="buton" id = "myid">Submit</button>
+       </div>
+     </form>
+
+	<div id='map'></div>
+
+  <!-- ESSAI MENU 1 -->
+  <!-- ############
+-->
+
+
+  <div class="container2">
+  <div class="tab-slider--nav">
+    <ul class="tab-slider--tabs">
+      <li class="tab-slider--trigger active" rel="tab1">Filtres</li>
+      <li class="tab-slider--trigger" rel="tab2">Affichage</li>
+    </ul>
+  </div>
+  <div class="tab-slider--container">
+    <div id="tab1" class="tab-slider--body">
+      <h2>Conditions souhaitées</h2>
+      <ul class="accordion">
+        <li class="has-sub">
+          <label for="menu1" class= 'labelBefore'>Luminosité</label><input id="menu1" name="menu" type="checkbox" />
+          <ul class="sub">
+            <li>
+              <label for="radiolum1" class='textinput'>
+                <input type="radio" id="radiolum1" value='lumiere-1' name="lumiere" onclick="filter(this);">
+                 Plein Jour </label>
+            </li>
+            <li>
+              <label for="radiolum2" class='textinput'>
+                <input type="radio" id="radiolum2" value='lumiere-2' name="lumiere" onchange="filter(this);">
+                 Crépuscule ou aube </label>
+            </li>
+            <li>
+              <label for="radiolum3">
+                <input type="radio" id="radiolum3" value='lumiere-3' name="lumiere" onchange="filter(this);">
+                  Nuit sans éclairage public </label>
+            </li>
+            <li>
+              <label for="radiolum4" class='textinput'>
+                <input type="radio" id="radiolum4" value='lumiere-4' name="lumiere" onchange="filter(this);">
+                 Nuit avec éclairage public non allumé </label>
+            </li>
+            <li>
+              <label for="radiolum5" class='textinput'>
+                <input type="radio" id="radiolum5" value='lumiere-5' name="lumiere" onchange="filter(this);">
+                 Nuit avec éclairage public allumé </label>
+            </li>
+          </ul>
+        </li>
+        <li class="has-sub">
+          <label for="menu2" class= 'labelBefore'>Conditions Atmosphériques</label><input id="menu2" name="menu" type="checkbox" />
+          <ul class="sub">
+            <li>
+              <label for="radiometeo1" class='textinput'>
+                <input type="radio" id="radiometeo1" value='meteo-1' name='meteo' onchange="filter(this);">
+                Normale </label>
+            </li>
+            <li>
+              <label for="radiometeo2" class='textinput'>
+                <input type="radio" id="radiometeo2" value='meteo-2' name='meteo' onchange="filter(this);">
+                Pluie Légère </label>
+            </li>
+            <li>
+              <label for="radiometeo3" class='textinput'>
+                <input type="radio" id="radiometeo3" value='meteo-3' name='meteo' onchange="filter(this);">
+                Pluie Forte </label>
+            </li>
+            <li>
+              <label for="radiometeo4" class='textinput'>
+                <input type="radio" id="radiometeo4" value='meteo-4' name='meteo' onchange="filter(this);">
+                Neige - Grèle </label>
+            </li>
+            <li>
+              <label for="radiometeo5" class='textinput'>
+                <input type="radio" id="radiometeo5" value='meteo-5' name='meteo' onchange="filter(this);">
+                Brouillard - Fumée </label>
+            </li>
+            <li>
+              <label for="radiometeo6" class='textinput'>
+                <input type="radio" id="radiometeo6" value='meteo-6' name='meteo' onchange="filter(this);">
+                Vent Fort - Tempêtes </label>
+            </li>
+            <li>
+              <label for="radiometeo7" class='textinput'>
+                <input type="radio" id="radiometeo7" value='meteo-7' name='meteo' onchange="filter(this);">
+                Temps Eblouissant </label>
+            </li>
+            <li>
+              <label for="radiometeo8" class='textinput'>
+                <input type="radio" id="radiometeo8" value='meteo-8' name='meteo' onchange="filter(this);">
+                Temps Couvert </label>
+            </li>
+            <li>
+              <label for="radiometeo9" class='textinput'>
+                <input type="radio" id="radiometeo9" value='meteo-9' name='meteo' onchange="filter(this);">
+                Autre </label>
+            </li>
+          </ul>
+        </li>
+        <li class="has-sub">
+          <label for="menu3" class= 'labelBefore'>Localisation</label><input id="menu3" name="menu" type="checkbox" />
+          <ul class="sub">
+            <li>
+              <label for="radioagg1" class='textinput'>
+                <input type="radio" id="radioagg1" value='localisation-1' name='localisation' onchange="filter(this);">
+                Hors agglomération </label>
+              </li>
+              <li>
+              <label for="radioagg2" class='textinput'>
+                  <input type="radio" id="radioagg2" value='localisation-2' name='localisation' onchange="filter(this);">
+                  En agglomération </label>
+            </li>
+          </ul>
+        </li>
+        <li class="has-sub">
+          <label for="menu4" class= 'labelBefore'>Réinitialiser</label><input id="menu4" name="menu" type="checkbox" onchange="reinitialize(this);" />
+        </li>
+      </ul>
+    </div>
+    <div id="tab2" class="tab-slider--body">
+      <h2>Elements à afficher</h2>
+      <div class = 'container3'>
+      <div class="tab">
+        <button class="tablinks" onclick="display_colors(event, 'Aucun')">Aucun</button>
+        <button class="tablinks" onclick="display_colors(event, 'Gravite')">Gravité</button>
+        <button class="tablinks" onclick="display_colors(event, 'Vehicule')">Véhicule</button>
+      </div>
+
+
+      <div id="Aucun" class="tabcontent">
+        <h3>Aucun</h3>
+        <p>Cliquez sur une condition pour afficher les points en fonction de leur methode.</p>
+      </div>
+
+      <div id="Gravite" class="tabcontent">
+        <h3>Gravité</h3>
+        <div class='my-legend'>
+        <div class='legend-title'>Gravité des accidents de la route</div>
+        <div class='legend-scale'>
+          <ul class='legend-labels'>
+            <li><span style='background:#223b53;'></span>Tué</li>
+            <li><span style='background:#e55e5e;'></span>Blessé hospitalisé</li>
+            <li><span style='background:#3bb2d0;'></span>Blessé leger</li>
+            <li><span style='background:#007cbf;'></span>Non renseigné</li>
+          </ul>
+        </div>
+        </div>
+      </div>
+
+      <div id="Vehicule" class="tabcontent">
+        <h3>Vehicule</h3>
+        <div class='my-legend'>
+        <div class='legend-title'>Type de véhicule utilisé</div>
+        <div class='legend-scale'>
+          <ul class='legend-labels'>
+            <li><span style='background:#223b53;'></span>Bicyclette</li>
+            <li><span style='background:#e55e5e;'></span>Deux roues</li>
+            <li><span style='background:#3bb2d0;'></span>Voiture</li>
+            <li><span style='background:#04B45F;'></span>Camion</li>
+            <li><span style='background:#FF8000;'></span>Bus</li>
+            <li><span style='background:#007cbf;'></span>Autre</li>
+          </ul>
+        </div>
+        </div>
+      </div>
+      </div>
+
+  </div>
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+
+    <script src="js/index.js"></script>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
